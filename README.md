@@ -1,2 +1,2 @@
-# polkascan-docker-compose
-Polkascan Docker Compose App
+# polkascan
+Polkascan Main Application
