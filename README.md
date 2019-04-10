@@ -1,2 +1,2 @@
-# polkascan
-Polkascan Main Application
+# Polkascan PRE
+Polkascan PRE Main Application
