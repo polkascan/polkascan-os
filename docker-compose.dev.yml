@@ -3,6 +3,7 @@ version: '3.2'
 services:
 
   explorer-api:
+    build: explorer-api/.
     image: polkascan/pre-explorer-api:milestone1
     ports:
       - '8001:8000'
@@ -16,6 +17,7 @@ services:
       - mysql
 
   harvester-api:
+    build: harvester/.
     image: polkascan/pre-harvester:milestone1
     ports:
       - '8000:8000'
@@ -33,6 +35,7 @@ services:
       - substrate-node
 
   harvester-worker:
+    build: harvester/.
     image: polkascan/pre-harvester:milestone1
     volumes:
       - './harvester:/usr/src/app'
@@ -43,6 +46,7 @@ services:
       - mysql
 
   harvester-beat:
+    build: harvester/.
     image: polkascan/pre-harvester:milestone1
     volumes:
       - './harvester:/usr/src/app'
@@ -53,6 +57,7 @@ services:
       - redis
 
   harvester-monitor:
+    build: harvester/.
     image: polkascan/pre-harvester:milestone1
     ports:
       - '5555:5555'
@@ -85,6 +90,7 @@ services:
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:milestone1
+    build: explorer-gui/.
     ports:
       - '8080:80'
     depends_on:
