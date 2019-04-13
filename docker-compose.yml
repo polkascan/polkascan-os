@@ -5,7 +5,7 @@ services:
   explorer-api:
     image: polkascan/pre-explorer-api:milestone1
     ports:
-      - '8001:8000'
+      - '8000:8000'
     volumes:
       - './explorer-api:/usr/src/app'
     command: ./start.sh
@@ -18,7 +18,7 @@ services:
   harvester-api:
     image: polkascan/pre-harvester:milestone1
     ports:
-      - '8000:8000'
+      - '8001:8000'
     volumes:
       - './harvester:/usr/src/app'
     command: ./start.sh
@@ -27,6 +27,7 @@ services:
       - CELERY_BACKEND=redis://redis:6379/0
       - PYTHONPATH=/usr/src/app
       - ENVIRONMENT=dev
+      - NETWORK=alexander
     depends_on:
       - redis
       - mysql

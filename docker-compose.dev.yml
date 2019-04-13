@@ -6,7 +6,7 @@ services:
     build: explorer-api/.
     image: polkascan/pre-explorer-api:milestone1
     ports:
-      - '8001:8000'
+      - '8000:8000'
     volumes:
       - './explorer-api:/usr/src/app'
     command: ./start.sh
@@ -20,7 +20,7 @@ services:
     build: harvester/.
     image: polkascan/pre-harvester:milestone1
     ports:
-      - '8000:8000'
+      - '8001:8000'
     volumes:
       - './harvester:/usr/src/app'
     command: ./start.sh
