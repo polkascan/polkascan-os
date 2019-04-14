@@ -3,6 +3,7 @@ version: '3.2'
 services:
 
   explorer-api:
+    build: explorer-api/.
     image: polkascan/pre-explorer-api:milestone1
     ports:
       - '8000:8000'
@@ -11,11 +12,13 @@ services:
     command: ./start.sh
     environment:
       - PYTHONPATH=/usr/src/app
+      - DB_NAME=polkascan
       - ENVIRONMENT=dev
     depends_on:
       - mysql
 
   harvester-api:
+    build: harvester/.
     image: polkascan/pre-harvester:milestone1
     ports:
       - '8001:8000'
@@ -26,6 +29,7 @@ services:
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
       - PYTHONPATH=/usr/src/app
+      - DB_NAME=polkascan
       - ENVIRONMENT=dev
     depends_on:
       - redis
@@ -33,6 +37,7 @@ services:
       - substrate-node
 
   harvester-worker:
+    build: harvester/.
     image: polkascan/pre-harvester:milestone1
     volumes:
       - './harvester:/usr/src/app'
@@ -43,6 +48,7 @@ services:
       - mysql
 
   harvester-beat:
+    build: harvester/.
     image: polkascan/pre-harvester:milestone1
     volumes:
       - './harvester:/usr/src/app'
@@ -53,6 +59,7 @@ services:
       - redis
 
   harvester-monitor:
+    build: harvester/.
     image: polkascan/pre-harvester:milestone1
     ports:
       - '5555:5555'
@@ -81,10 +88,14 @@ services:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --dev --rpc-port 9933 --rpc-external --pruning=10000000
+    command: --chain=alexander --rpc-port 9933 --rpc-external --pruning=10000000
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:milestone1
+    build:
+      context: explorer-gui/.
+      args:
+        env: alexander
     ports:
       - '8080:80'
     depends_on:
