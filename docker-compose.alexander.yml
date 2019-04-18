@@ -4,7 +4,7 @@ services:
 
   explorer-api:
     build: explorer-api/.
-    image: polkascan/pre-explorer-api:milestone1
+    image: polkascan/pre-explorer-api:latest
     ports:
       - '8000:8000'
     volumes:
@@ -19,7 +19,7 @@ services:
 
   harvester-api:
     build: harvester/.
-    image: polkascan/pre-harvester:milestone1
+    image: polkascan/pre-harvester:latest
     ports:
       - '8001:8000'
     volumes:
@@ -38,7 +38,7 @@ services:
 
   harvester-worker:
     build: harvester/.
-    image: polkascan/pre-harvester:milestone1
+    image: polkascan/pre-harvester:latest
     volumes:
       - './harvester:/usr/src/app'
     command: celery -A app.tasks worker --loglevel=INFO
@@ -49,10 +49,10 @@ services:
 
   harvester-beat:
     build: harvester/.
-    image: polkascan/pre-harvester:milestone1
+    image: polkascan/pre-harvester:latest
     volumes:
       - './harvester:/usr/src/app'
-      - './data/celerybeat:/usr/src/app/data'
+      - './data/alexander/celerybeat:/usr/src/app/data'
     command: celery -A app.tasks beat --loglevel=INFO  --schedule="data/celerybeat-schedule" --pidfile="data/celerybeat.pid"
     environment: *env
     depends_on:
@@ -60,7 +60,7 @@ services:
 
   harvester-monitor:
     build: harvester/.
-    image: polkascan/pre-harvester:milestone1
+    image: polkascan/pre-harvester:latest
     ports:
       - '5555:5555'
     command:  flower -A app.tasks --port=5555 --broker=redis://redis:6379/0
@@ -73,7 +73,7 @@ services:
   mysql:
     image: mysql:latest
     volumes:
-      - './data/mysql:/var/lib/mysql'
+      - './data/alexander/mysql:/var/lib/mysql'
     ports:
       - '33061:3306'
     environment:
@@ -83,15 +83,15 @@ services:
   substrate-node:
     image: polkasource/substrate-alexander:latest
     volumes:
-      - './data/substrate:/data'
+      - './data/alexander/substrate:/data'
     ports:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --chain=alexander --rpc-port 9933 --rpc-external --pruning=10000000
+    command: --rpc-port 9933 --rpc-external --pruning=10000000
 
   explorer-gui:
-    image: polkascan/pre-explorer-gui:milestone1
+    image: polkascan/pre-explorer-gui:latest
     build:
       context: explorer-gui/.
       args:

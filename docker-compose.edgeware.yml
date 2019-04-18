@@ -12,6 +12,7 @@ services:
     command: ./start.sh
     environment:
       - PYTHONPATH=/usr/src/app
+      - DB_NAME=polkascan
       - ENVIRONMENT=dev
     depends_on:
       - mysql
@@ -28,6 +29,7 @@ services:
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
       - PYTHONPATH=/usr/src/app
+      - DB_NAME=polkascan
       - ENVIRONMENT=dev
     depends_on:
       - redis
@@ -50,7 +52,7 @@ services:
     image: polkascan/pre-harvester:latest
     volumes:
       - './harvester:/usr/src/app'
-      - './data/local/celerybeat:/usr/src/app/data'
+      - './data/edgeware/celerybeat:/usr/src/app/data'
     command: celery -A app.tasks beat --loglevel=INFO  --schedule="data/celerybeat-schedule" --pidfile="data/celerybeat.pid"
     environment: *env
     depends_on:
@@ -71,7 +73,7 @@ services:
   mysql:
     image: mysql:latest
     volumes:
-      - './data/local/mysql:/var/lib/mysql'
+      - './data/edgeware/mysql:/var/lib/mysql'
     ports:
       - '33061:3306'
     environment:
@@ -79,18 +81,21 @@ services:
       - MYSQL_DATABASE=polkascan
 
   substrate-node:
-    image: polkasource/substrate-alexander:latest
+    image: polkasource/substrate-edgeware:latest
     volumes:
-      - './data/local/substrate:/data'
+      - './data/edgeware/substrate:/data'
     ports:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --dev --rpc-port 9933 --rpc-external --pruning=10000000
+    command: --chain=edgeware --rpc-port 9933 --rpc-external --pruning=10000000
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
-    build: explorer-gui/.
+    build:
+      context: explorer-gui/.
+      args:
+        env: edgeware
     ports:
       - '8080:80'
     depends_on:
