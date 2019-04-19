@@ -1,34 +1,28 @@
 # Polkascan PRE
 Polkascan PRE Main Application
 
-## Run application (Prebuilt Docker Hub images)
-
-* During the first run let MySQL initialize (wait for 30 seconds)
-
-```bash
-docker-compose up -d mysql
-```
-
-* Then start the other docker containers
-```bash
-docker-compose up
-```
-
-## Run application (Build from source)
+## Run application
 
 * Make sure to also clone submodules within the cloned directory: 
 ```bash
 git submodule update --init --recursive
 ```
-* During the first run let MySQL initialize (wait for 30 seconds)
+* During the first run let MySQL initialize (wait for about a minute)
 
 ```bash
-docker-compose -f docker-compose.dev.yml up -d mysql
+docker-compose -f docker-compose.yml up -d mysql
 ```
 * Then build the other docker containers
 ```bash
-docker-compose -f docker-compose.dev.yml up --build
+docker-compose -f docker-compose.yml up --build
 ```
+
+This will harvest blocks from a new local network, for existing networks replace the mentioned docker-compose.yml with:
+
+* docker-compose.alexander.yml for Alexander test network
+* docker-compose.edgeware.yml for Edgeware test network
+* docker-compose.robonomics.yml for Robonomics test network
+
 ## Links
 
 * Polkascan Explorer GUI: http://127.0.0.1:8080
