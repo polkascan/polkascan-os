@@ -1,0 +1,104 @@
+version: '3.2'
+
+services:
+
+  explorer-api:
+    build: explorer-api/.
+    image: polkascan/pre-explorer-api:latest
+    ports:
+      - '8000:8000'
+    volumes:
+      - './explorer-api:/usr/src/app'
+    command: ./start.sh
+    environment:
+      - PYTHONPATH=/usr/src/app
+      - DB_NAME=polkascan
+      - ENVIRONMENT=dev
+    depends_on:
+      - mysql
+
+  harvester-api:
+    build: harvester/.
+    image: polkascan/pre-harvester:latest
+    ports:
+      - '8001:8000'
+    volumes:
+      - './harvester:/usr/src/app'
+    command: ./start.sh
+    environment: &env
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+      - PYTHONPATH=/usr/src/app
+      - DB_NAME=polkascan
+      - ENVIRONMENT=dev
+    depends_on:
+      - redis
+      - mysql
+      - substrate-node
+
+  harvester-worker:
+    build: harvester/.
+    image: polkascan/pre-harvester:latest
+    volumes:
+      - './harvester:/usr/src/app'
+    command: celery -A app.tasks worker --loglevel=INFO
+    environment: *env
+    depends_on:
+      - redis
+      - mysql
+
+  harvester-beat:
+    build: harvester/.
+    image: polkascan/pre-harvester:latest
+    volumes:
+      - './harvester:/usr/src/app'
+      - './data/joystream/celerybeat:/usr/src/app/data'
+    command: celery -A app.tasks beat --loglevel=INFO  --schedule="data/celerybeat-schedule" --pidfile="data/celerybeat.pid"
+    environment: *env
+    depends_on:
+      - redis
+
+  harvester-monitor:
+    build: harvester/.
+    image: polkascan/pre-harvester:latest
+    ports:
+      - '5555:5555'
+    command:  flower -A app.tasks --port=5555 --broker=redis://redis:6379/0
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:3.2.11
+
+  mysql:
+    image: mysql:latest
+    volumes:
+      - './data/joystream/mysql:/var/lib/mysql'
+    ports:
+      - '33061:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=polkascan
+
+  substrate-node:
+    image: polkasource/substrate-joystream:latest
+    volumes:
+      - './data/joystream/substrate:/data'
+    ports:
+      - '30333:30333'
+      - '9933:9933'
+      - '9944:9944'
+    command: --rpc-port 9933 --rpc-external --pruning=10000000
+
+  explorer-gui:
+    image: polkascan/pre-explorer-gui:latest
+    build:
+      context: explorer-gui/.
+      args:
+        NETWORK_NAME: Joystream
+        API_URL: http://127.0.0.1:8080/api/v1/
+    ports:
+      - '8080:80'
+    depends_on:
+      - harvester-api
+      - explorer-api
