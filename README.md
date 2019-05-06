@@ -22,6 +22,7 @@ This will harvest blocks from a new local network, for existing networks replace
 * docker-compose.alexander.yml for Alexander test network
 * docker-compose.edgeware.yml for Edgeware test network
 * docker-compose.robonomics.yml for Robonomics test network
+* docker-compose.joystream.yml for Joystream test network
 
 ## Links
 
