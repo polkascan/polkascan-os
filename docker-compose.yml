@@ -5,22 +5,27 @@ services:
   explorer-api:
     build: explorer-api/.
     image: polkascan/pre-explorer-api:latest
-    ports:
-      - '8000:8000'
+    hostname: explorer-api
+    container_name: dev-explorer-api
     volumes:
       - './explorer-api:/usr/src/app'
     command: ./start.sh
     environment:
       - PYTHONPATH=/usr/src/app
       - ENVIRONMENT=dev
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=polkascan
     depends_on:
       - mysql
 
   harvester-api:
     build: harvester/.
     image: polkascan/pre-harvester:latest
-    ports:
-      - '8001:8000'
+    hostname: harvester-api
+    container_name: dev-harvester-api
     volumes:
       - './harvester:/usr/src/app'
     command: ./start.sh
@@ -29,6 +34,12 @@ services:
       - CELERY_BACKEND=redis://redis:6379/0
       - PYTHONPATH=/usr/src/app
       - ENVIRONMENT=dev
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=polkascan
+      - SUBSTRATE_RPC_URL=http://substrate-node:9933/
     depends_on:
       - redis
       - mysql
@@ -37,6 +48,7 @@ services:
   harvester-worker:
     build: harvester/.
     image: polkascan/pre-harvester:latest
+    container_name: dev-harvester-worker
     volumes:
       - './harvester:/usr/src/app'
     command: celery -A app.tasks worker --loglevel=INFO
@@ -48,9 +60,10 @@ services:
   harvester-beat:
     build: harvester/.
     image: polkascan/pre-harvester:latest
+    container_name: dev-harvester-beat
     volumes:
       - './harvester:/usr/src/app'
-      - './data/local/celerybeat:/usr/src/app/data'
+      - './data/dev/celerybeat:/usr/src/app/data'
     command: celery -A app.tasks beat --loglevel=INFO  --schedule="data/celerybeat-schedule" --pidfile="data/celerybeat.pid"
     environment: *env
     depends_on:
@@ -59,6 +72,7 @@ services:
   harvester-monitor:
     build: harvester/.
     image: polkascan/pre-harvester:latest
+    container_name: dev-harvester-monitor
     ports:
       - '5555:5555'
     command:  flower -A app.tasks --port=5555 --broker=redis://redis:6379/0
@@ -67,11 +81,15 @@ services:
 
   redis:
     image: redis:3.2.11
+    hostname: redis
+    container_name: dev-redis
 
   mysql:
     image: mysql:latest
+    hostname: mysql
+    container_name: dev-mysql
     volumes:
-      - './data/local/mysql:/var/lib/mysql'
+      - './data/dev/mysql:/var/lib/mysql'
     ports:
       - '33061:3306'
     environment:
@@ -80,8 +98,10 @@ services:
 
   substrate-node:
     image: polkasource/substrate-alexander:latest
+    hostname: substrate-node
+    container_name: dev-substrate-node
     volumes:
-      - './data/local/substrate:/data'
+      - './data/dev/substrate:/data'
     ports:
       - '30333:30333'
       - '9933:9933'
@@ -90,6 +110,7 @@ services:
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
+    container_name: dev-explorer-gui
     build:
       context: explorer-gui/.
       args:
