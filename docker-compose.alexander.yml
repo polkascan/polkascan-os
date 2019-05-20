@@ -6,7 +6,6 @@ services:
     build: explorer-api/.
     image: polkascan/pre-explorer-api:latest
     hostname: explorer-api
-    container_name: alexander-explorer-api
     volumes:
       - './explorer-api:/usr/src/app'
     command: ./start.sh
@@ -25,7 +24,6 @@ services:
     build: harvester/.
     image: polkascan/pre-harvester:latest
     hostname: harvester-api
-    container_name: alexander-harvester-api
     volumes:
       - './harvester:/usr/src/app'
     command: ./start.sh
@@ -48,7 +46,6 @@ services:
   harvester-worker:
     build: harvester/.
     image: polkascan/pre-harvester:latest
-    container_name: alexander-harvester-worker
     volumes:
       - './harvester:/usr/src/app'
     command: celery -A app.tasks worker --loglevel=INFO
@@ -60,10 +57,9 @@ services:
   harvester-beat:
     build: harvester/.
     image: polkascan/pre-harvester:latest
-    container_name: alexander-harvester-beat
     volumes:
       - './harvester:/usr/src/app'
-      - './data/alexander/celerybeat:/usr/src/app/data'
+      - '/usr/src/app/data'
     command: celery -A app.tasks beat --loglevel=INFO  --schedule="data/celerybeat-schedule" --pidfile="data/celerybeat.pid"
     environment: *env
     depends_on:
@@ -72,7 +68,6 @@ services:
   harvester-monitor:
     build: harvester/.
     image: polkascan/pre-harvester:latest
-    container_name: alexander-harvester-monitor
     ports:
       - '5555:5555'
     command:  flower -A app.tasks --port=5555 --broker=redis://redis:6379/0
@@ -87,9 +82,8 @@ services:
   mysql:
     image: mysql:latest
     hostname: mysql
-    container_name: alexander-mysql
     volumes:
-      - './data/alexander/mysql:/var/lib/mysql'
+      - 'db-data:/var/lib/mysql'
     ports:
       - '33061:3306'
     environment:
@@ -99,9 +93,8 @@ services:
   substrate-node:
     image: polkasource/substrate-alexander:latest
     hostname: substrate-node
-    container_name: alexander-substrate-node
     volumes:
-      - './data/alexander/substrate:/data'
+      - 'substrate-data:/data'
     ports:
       - '30333:30333'
       - '9933:9933'
@@ -110,7 +103,6 @@ services:
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
-    container_name: alexander-explorer-gui
     build:
       context: explorer-gui/.
       args:
@@ -123,3 +115,7 @@ services:
     depends_on:
       - harvester-api
       - explorer-api
+
+volumes:
+  db-data:
+  substrate-data:
