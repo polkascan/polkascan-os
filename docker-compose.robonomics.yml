@@ -116,6 +116,8 @@ services:
       args:
         NETWORK_NAME: Robonomics
         API_URL: http://127.0.0.1:8080/api/v1/
+        NETWORK_TOKEN_SYMBOL: XRT
+        NETWORK_TOKEN_DECIMALS: 9
     ports:
       - '8080:80'
     depends_on:
