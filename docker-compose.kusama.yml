@@ -18,6 +18,7 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
+      - SUBSTRATE_ADDRESS_TYPE=2
     depends_on:
       - mysql
       - substrate-node
@@ -39,8 +40,9 @@ services:
       - DB_USER=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
-      - TYPE_REGISTRY=edgeware
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
+      - TYPE_REGISTRY=kusama
+      - SUBSTRATE_ADDRESS_TYPE=2
     depends_on:
       - redis
       - mysql
@@ -93,7 +95,7 @@ services:
       - MYSQL_DATABASE=polkascan
 
   substrate-node:
-    image: polkasource/substrate-edgeware:latest
+    image: polkasource/substrate-client:kusama-latest
     hostname: substrate-node
     volumes:
       - 'substrate-data:/data'
@@ -101,15 +103,15 @@ services:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --rpc-port 9933 --rpc-external --pruning=10000000
+    command: --dev --rpc-port 9933 --rpc-external --ws-external --pruning=10000000
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
     build:
       context: explorer-gui/.
       args:
-        NETWORK_NAME: Edgeware
-        NETWORK_TOKEN_SYMBOL: EDG
+        NETWORK_NAME: Dev
+        NETWORK_TOKEN_SYMBOL: KSM
         NETWORK_TOKEN_DECIMALS: 15
         API_URL: http://127.0.0.1:8080/api/v1/
     ports:
