@@ -18,7 +18,7 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
-      - SUBSTRATE_METADATA_VERSION=4
+      - SUBSTRATE_ADDRESS_TYPE=2
     depends_on:
       - mysql
       - substrate-node
@@ -41,6 +41,8 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
+      - TYPE_REGISTRY=kusama
+      - SUBSTRATE_ADDRESS_TYPE=2
     depends_on:
       - redis
       - mysql
@@ -93,7 +95,7 @@ services:
       - MYSQL_DATABASE=polkascan
 
   substrate-node:
-    image: polkasource/substrate-alexander:latest
+    image: polkasource/substrate-client:kusama-latest
     hostname: substrate-node
     volumes:
       - 'substrate-data:/data'
@@ -109,8 +111,8 @@ services:
       context: explorer-gui/.
       args:
         NETWORK_NAME: Dev
-        NETWORK_TOKEN_SYMBOL: DOT
-        NETWORK_TOKEN_DECIMALS: 0
+        NETWORK_TOKEN_SYMBOL: KSM
+        NETWORK_TOKEN_DECIMALS: 15
         API_URL: http://127.0.0.1:8080/api/v1/
     ports:
       - '8080:80'

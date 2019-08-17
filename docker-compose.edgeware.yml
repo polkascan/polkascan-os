@@ -39,6 +39,7 @@ services:
       - DB_USER=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
+      - TYPE_REGISTRY=edgeware
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
     depends_on:
       - redis
