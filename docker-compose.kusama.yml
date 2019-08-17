@@ -110,7 +110,7 @@ services:
     build:
       context: explorer-gui/.
       args:
-        NETWORK_NAME: Dev
+        NETWORK_NAME: Kusama Dev
         NETWORK_TOKEN_SYMBOL: KSM
         NETWORK_TOKEN_DECIMALS: 15
         API_URL: http://127.0.0.1:8080/api/v1/
