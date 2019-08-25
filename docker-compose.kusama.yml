@@ -103,14 +103,14 @@ services:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --dev --rpc-port 9933 --rpc-external --ws-external --pruning=10000000
+    command: --rpc-external --ws-external --rpc-cors=all --pruning=10000000
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
     build:
       context: explorer-gui/.
       args:
-        NETWORK_NAME: Kusama Dev
+        NETWORK_NAME: Kusama
         NETWORK_TOKEN_SYMBOL: KSM
         NETWORK_TOKEN_DECIMALS: 15
         API_URL: http://127.0.0.1:8080/api/v1/
