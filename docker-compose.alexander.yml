@@ -18,6 +18,7 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
+      - TYPE_REGISTRY=alexander
     depends_on:
       - mysql
       - substrate-node

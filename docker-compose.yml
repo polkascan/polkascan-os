@@ -19,6 +19,7 @@ services:
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
       - SUBSTRATE_ADDRESS_TYPE=2
+      - TYPE_REGISTRY=kusama
     depends_on:
       - mysql
       - substrate-node
