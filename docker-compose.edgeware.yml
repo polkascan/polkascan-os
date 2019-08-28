@@ -94,7 +94,7 @@ services:
       - MYSQL_DATABASE=polkascan
 
   substrate-node:
-    image: polkasource/substrate-edgeware:latest
+    image: polkasource/substrate-client:edgeware-v0.7.0
     hostname: substrate-node
     volumes:
       - 'substrate-data:/data'
@@ -102,7 +102,7 @@ services:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --rpc-port 9933 --rpc-external --pruning=10000000
+    command: --chain=edgeware --rpc-external --rpc-cors=all --ws-external --pruning=archive
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest

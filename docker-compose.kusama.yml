@@ -104,7 +104,7 @@ services:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --rpc-external --ws-external --rpc-cors=all --pruning=10000000
+    command: --rpc-external --ws-external --rpc-cors=all --pruning=archive
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
