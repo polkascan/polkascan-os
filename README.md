@@ -19,6 +19,10 @@ docker-compose -p dev -f docker-compose.yml up --build
 
 This will harvest blocks from a new local network, for existing networks replace the mentioned docker-compose.yml with:
 
+* Kusama network
+```bash
+docker-compose -p kusama -f docker-compose.kusama.yml up --build
+```
 * Alexander test network
 ```bash
 docker-compose -p alexander -f docker-compose.alexander.yml up --build
