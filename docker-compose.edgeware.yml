@@ -94,7 +94,7 @@ services:
       - MYSQL_DATABASE=polkascan
 
   substrate-node:
-    image: polkasource/substrate-client:edgeware-v0.7.0
+    image: polkasource/substrate-client:edgeware-v0.8.0
     hostname: substrate-node
     volumes:
       - 'substrate-data:/data'
@@ -102,7 +102,7 @@ services:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --chain=edgeware --rpc-external --rpc-cors=all --ws-external --pruning=archive
+    command: --chain=edgeware-testnet-v8 --rpc-external --rpc-cors=all --ws-external --pruning=archive
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
@@ -111,7 +111,7 @@ services:
       args:
         NETWORK_NAME: Edgeware
         NETWORK_TOKEN_SYMBOL: EDG
-        NETWORK_TOKEN_DECIMALS: 15
+        NETWORK_TOKEN_DECIMALS: 18
         API_URL: http://127.0.0.1:8080/api/v1/
     ports:
       - '8080:80'

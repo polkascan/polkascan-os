@@ -113,7 +113,7 @@ services:
       args:
         NETWORK_NAME: Kusama
         NETWORK_TOKEN_SYMBOL: KSM
-        NETWORK_TOKEN_DECIMALS: 15
+        NETWORK_TOKEN_DECIMALS: 12
         API_URL: http://127.0.0.1:8080/api/v1/
     ports:
       - '8080:80'
