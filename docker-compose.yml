@@ -121,6 +121,11 @@ services:
       - harvester-api
       - explorer-api
 
+  polkadot-ui:
+    image: polkasource/substrate-ui:polkadot-latest
+    ports:
+      - '8081:80'
+
 volumes:
   db-data:
   substrate-data:
