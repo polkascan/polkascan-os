@@ -19,8 +19,8 @@ services:
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
       - SUBSTRATE_ADDRESS_TYPE=2
-      - TYPE_REGISTRY=kusama-cc3
-      - SUBSTRATE_METADATA_VERSION=9
+      - TYPE_REGISTRY=kusama-cc2
+
     depends_on:
       - mysql
       - substrate-node
@@ -43,9 +43,9 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
-      - TYPE_REGISTRY=kusama-cc3
+      - TYPE_REGISTRY=kusama-cc2
       - SUBSTRATE_ADDRESS_TYPE=2
-      - SUBSTRATE_METADATA_VERSION=9
+
     depends_on:
       - redis
       - mysql
@@ -61,17 +61,17 @@ services:
     depends_on:
       - redis
       - mysql
-
-  harvester-beat:
-    build: harvester/.
-    image: polkascan/pre-harvester:latest
-    volumes:
-      - './harvester:/usr/src/app'
-      - '/usr/src/app/data'
-    command: celery -A app.tasks beat --loglevel=INFO  --schedule="data/celerybeat-schedule" --pidfile="data/celerybeat.pid"
-    environment: *env
-    depends_on:
-      - redis
+#
+#  harvester-beat:
+#    build: harvester/.
+#    image: polkascan/pre-harvester:latest
+#    volumes:
+#      - './harvester:/usr/src/app'
+#      - '/usr/src/app/data'
+#    command: celery -A app.tasks beat --loglevel=INFO  --schedule="data/celerybeat-schedule" --pidfile="data/celerybeat.pid"
+#    environment: *env
+#    depends_on:
+#      - redis
 
   harvester-monitor:
     build: harvester/.
@@ -98,7 +98,7 @@ services:
       - MYSQL_DATABASE=polkascan
 
   substrate-node:
-    image: polkasource/substrate-client:kusama-latest
+    image: polkasource/substrate-client:kusama-v0.6.18
     hostname: substrate-node
     volumes:
       - 'substrate-data:/data'
