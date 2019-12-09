@@ -20,6 +20,7 @@ services:
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
       - SUBSTRATE_ADDRESS_TYPE=2
       - TYPE_REGISTRY=kusama
+      - SUBSTRATE_METADATA_VERSION=9
     depends_on:
       - mysql
       - substrate-node
@@ -44,6 +45,7 @@ services:
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
       - TYPE_REGISTRY=kusama
       - SUBSTRATE_ADDRESS_TYPE=2
+      - SUBSTRATE_METADATA_VERSION=9
     depends_on:
       - redis
       - mysql
