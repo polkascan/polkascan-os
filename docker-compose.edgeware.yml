@@ -19,6 +19,7 @@ services:
       - DB_NAME=polkascan
       - TYPE_REGISTRY=edgeware
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
+      - SUBSTRATE_METADATA_VERSION=9
     depends_on:
       - mysql
       - substrate-node
@@ -42,6 +43,7 @@ services:
       - DB_NAME=polkascan
       - TYPE_REGISTRY=edgeware
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
+      - SUBSTRATE_METADATA_VERSION=9
     depends_on:
       - redis
       - mysql
