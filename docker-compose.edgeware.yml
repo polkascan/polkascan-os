@@ -11,15 +11,17 @@ services:
     command: ./start.sh
     environment:
       - PYTHONPATH=/usr/src/app
-      - ENVIRONMENT=dev
+      - ENVIRONMENT=prod
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
-      - TYPE_REGISTRY=edgeware
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
+      - SUBSTRATE_ADDRESS_TYPE=7
+      - TYPE_REGISTRY=edgeware
       - SUBSTRATE_METADATA_VERSION=9
+      - SUBSTRATE_STORAGE_BALANCE=Account
     depends_on:
       - mysql
       - substrate-node
@@ -35,15 +37,17 @@ services:
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
       - PYTHONPATH=/usr/src/app
-      - ENVIRONMENT=dev
+      - ENVIRONMENT=prod
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
-      - TYPE_REGISTRY=edgeware
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
+      - TYPE_REGISTRY=edgeware
+      - SUBSTRATE_ADDRESS_TYPE=7
       - SUBSTRATE_METADATA_VERSION=9
+      - SUBSTRATE_STORAGE_BALANCE=Account
     depends_on:
       - redis
       - mysql
@@ -96,7 +100,7 @@ services:
       - MYSQL_DATABASE=polkascan
 
   substrate-node:
-    image: polkasource/substrate-client:edgeware-v0.9.9
+    image: polkasource/substrate-client:edgeware-latest
     hostname: substrate-node
     volumes:
       - 'substrate-data:/data'
@@ -104,7 +108,7 @@ services:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --chain=edg-0.9.9 --rpc-external --rpc-cors=all --ws-external --pruning=archive
+    command: --chain=edgeware --rpc-external --ws-external --rpc-cors=all --pruning=archive
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
@@ -112,14 +116,22 @@ services:
       context: explorer-gui/.
       args:
         NETWORK_NAME: Edgeware
+        NETWORK_ID: edgeware
+        NETWORK_TYPE: pre
+        CHAIN_TYPE: relay
         NETWORK_TOKEN_SYMBOL: EDG
         NETWORK_TOKEN_DECIMALS: 18
-        API_URL: http://127.0.0.1:8080/api/v1/
+        API_URL: http://127.0.0.1:8080/api/v1
     ports:
       - '8080:80'
     depends_on:
       - harvester-api
       - explorer-api
+
+  polkadot-ui:
+    image: polkasource/substrate-ui:polkadot-latest
+    ports:
+      - '8081:80'
 
 volumes:
   db-data:

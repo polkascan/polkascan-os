@@ -11,14 +11,14 @@ services:
     command: ./start.sh
     environment:
       - PYTHONPATH=/usr/src/app
-      - ENVIRONMENT=dev
+      - ENVIRONMENT=prod
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
-      - SUBSTRATE_ADDRESS_TYPE=2
+      - SUBSTRATE_ADDRESS_TYPE=42
       - TYPE_REGISTRY=kusama
       - SUBSTRATE_METADATA_VERSION=9
     depends_on:
@@ -36,7 +36,7 @@ services:
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
       - PYTHONPATH=/usr/src/app
-      - ENVIRONMENT=dev
+      - ENVIRONMENT=prod
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_USERNAME=root
@@ -44,7 +44,7 @@ services:
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
       - TYPE_REGISTRY=kusama
-      - SUBSTRATE_ADDRESS_TYPE=2
+      - SUBSTRATE_ADDRESS_TYPE=42
       - SUBSTRATE_METADATA_VERSION=9
     depends_on:
       - redis
@@ -114,9 +114,12 @@ services:
       context: explorer-gui/.
       args:
         NETWORK_NAME: Kusama Dev
+        NETWORK_ID: kusama
+        NETWORK_TYPE: pre
+        CHAIN_TYPE: relay
         NETWORK_TOKEN_SYMBOL: KSM
         NETWORK_TOKEN_DECIMALS: 12
-        API_URL: http://127.0.0.1:8080/api/v1/
+        API_URL: http://127.0.0.1:8080/api/v1
     ports:
       - '8080:80'
     depends_on:
