@@ -1,43 +1,45 @@
-# Polkascan PRE
-Polkascan PRE Main Application
+# Polkascan Open-Source
+Polkascan Open-Source Application
 
-## Run application
+## Run application for a development network
+The following steps will run a full Polkascan-stack that harvests blocks from a new local network.
 
-* Make sure to also clone submodules within the cloned directory: 
+### Step 1: Clone repository: 
+```bash
+git clone https://github.com/polkascan/polkascan-pre.git
+```
+### Step 2: Change directory: 
+```bash
+cd polkascan-pre
+```
+### Step 3: Check available releases: 
+```bash
+git tag
+```
+### Step 4: Checkout latest releases: 
+```bash
+git checkout v0.x.x
+```
+### Step 5: Make sure to also clone submodules within the cloned directory: 
 ```bash
 git submodule update --init --recursive
 ```
-* During the first run let MySQL initialize (wait for about a minute)
-
+### Step 6: During the first run let MySQL initialize (wait for about a minute)
 ```bash
 docker-compose -p dev -f docker-compose.yml up -d mysql
 ```
-* Then build the other docker containers
+### Step 7: Then build the other docker containers
 ```bash
 docker-compose -p dev -f docker-compose.yml up --build
 ```
 
-This will harvest blocks from a new local network, for existing networks replace the mentioned docker-compose.yml with:
+## Run application for existing public networks
+For existing public networks use the following commands in step 6 & 7 respectively:
 
-* Kusama network
+### Kusama
 ```bash
+docker-compose -p kusama -f docker-compose.kusama.yml up -d mysql
 docker-compose -p kusama -f docker-compose.kusama.yml up --build
-```
-* Alexander test network
-```bash
-docker-compose -p alexander -f docker-compose.alexander.yml up --build
-```
-* Edgeware test network
-```bash
-docker-compose -p edgeware -f docker-compose.edgeware.yml up --build
-```
-* Robonomics test network
-```bash
-docker-compose -p robonomics -f docker-compose.robonomics.yml up --build
-```
-* Joystream test network
-```bash
-docker-compose -p joystream -f docker-compose.joystream.yml up --build
 ```
 
 ## Links
