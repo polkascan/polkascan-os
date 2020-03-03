@@ -42,8 +42,27 @@ docker-compose -p kusama -f docker-compose.kusama.yml up -d mysql
 docker-compose -p kusama -f docker-compose.kusama.yml up --build
 ```
 
-## Links
+## Links to applications
 
 * Polkascan Explorer GUI: http://127.0.0.1:8080
-* Harvester task monitor: http://127.0.0.1:5555
-* Harvester progress: http://127.0.0.1:8080/harvester/admin
+* Harvester Task Monitor: http://127.0.0.1:5555
+* Harvester Status: http://127.0.0.1:8080/harvester/admin
+* Polkadot JS Apps: http://127.0.0.1:8081
+
+## Cleanup Docker
+Use the following commands with caution to cleanup your Docker environment.
+
+### Prune images
+```bash
+docker system prune
+```
+
+### Prune images (force)
+```bash
+docker system prune -a
+```
+
+### Prune volumes
+```bash
+docker volume prune
+```
