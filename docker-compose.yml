@@ -46,6 +46,7 @@ services:
       - TYPE_REGISTRY=kusama
       - SUBSTRATE_ADDRESS_TYPE=42
       - SUBSTRATE_METADATA_VERSION=9
+      - NEW_SESSION_EVENT_HANDLER=True
     depends_on:
       - redis
       - mysql
@@ -119,6 +120,7 @@ services:
         CHAIN_TYPE: relay
         NETWORK_TOKEN_SYMBOL: KSM
         NETWORK_TOKEN_DECIMALS: 12
+        NETWORK_COLOR_CODE: d32e79
         API_URL: http://127.0.0.1:8080/api/v1
     ports:
       - '8080:80'
