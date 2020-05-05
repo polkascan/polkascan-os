@@ -1,0 +1,24 @@
+version: '3.2'
+
+services:
+
+  explorer-gui:
+    image: polkascan/pre-explorer-gui:latest
+    build:
+      context: explorer-gui/.
+      args:
+        NETWORK_NAME: Kusama
+        NETWORK_ID: kusama
+        NETWORK_TYPE: pre
+        CHAIN_TYPE: relay
+        NETWORK_TOKEN_SYMBOL: KSM
+        NETWORK_TOKEN_DECIMALS: 12
+        NETWORK_COLOR_CODE: d32e79
+        API_URL: https://api-01.polkascan.io/kusama/api/v1
+    ports:
+      - '8080:80'
+
+  polkadot-ui:
+    image: polkasource/substrate-ui:polkadot-latest
+    ports:
+      - '8081:80'
