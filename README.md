@@ -6,11 +6,11 @@ The following steps will run a full Polkascan-stack that harvests blocks from a 
 
 ### Step 1: Clone repository: 
 ```bash
-git clone https://github.com/polkascan/polkascan-pre.git
+git clone https://github.com/polkascan/polkascan-os.git
 ```
 ### Step 2: Change directory: 
 ```bash
-cd polkascan-pre
+cd polkascan-os
 ```
 ### Step 3: Check available releases: 
 ```bash
