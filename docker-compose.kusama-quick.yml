@@ -14,6 +14,7 @@ services:
         NETWORK_TOKEN_SYMBOL: KSM
         NETWORK_TOKEN_DECIMALS: 12
         NETWORK_COLOR_CODE: d32e79
+        NGINX_CONF: nginx/polkascan-gui.conf
         API_URL: https://api-01.polkascan.io/kusama/api/v1
     ports:
       - '8080:80'
