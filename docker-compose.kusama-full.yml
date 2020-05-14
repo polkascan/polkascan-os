@@ -108,7 +108,7 @@ services:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --chain=kusama --db-cache=2048 --wasm-execution=Compiled --rpc-external --rpc-cors=all --ws-external --unsafe-rpc-expose --pruning=archive
+    command: --chain=kusama --db-cache=2048 --wasm-execution=Compiled --rpc-external --rpc-cors=all --ws-external --rpc-methods=Unsafe --pruning=archive
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
