@@ -7,15 +7,15 @@ services:
     build:
       context: explorer-gui/.
       args:
-        NETWORK_NAME: Kusama
-        NETWORK_ID: kusama
+        NETWORK_NAME: Polkadot CC1
+        NETWORK_ID: polkadot-cc1
         NETWORK_TYPE: pre
         CHAIN_TYPE: relay
-        NETWORK_TOKEN_SYMBOL: KSM
+        NETWORK_TOKEN_SYMBOL: DOT
         NETWORK_TOKEN_DECIMALS: 12
-        NETWORK_COLOR_CODE: 000000
+        NETWORK_COLOR_CODE: e6007a
         NGINX_CONF: nginx/polkascan-gui.conf
-        API_URL: https://api-01.polkascan.io/kusama/api/v1
+        API_URL: https://api-01.polkascan.io/polkadot/api/v1
     ports:
       - '8080:80'
 
