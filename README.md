@@ -72,7 +72,7 @@ docker-compose -p kusama -f docker-compose.kusama-full.yml up --build
 ## Custom network
 
 * Modify `docker-compose.custom.yml` according to the specification of the custom chain
-* Modify `app/type_registry/custom_types.json` to match the introduced types of the custom chain 
+* Modify `harvester/app/type_registry/custom_types.json` to match the introduced types of the custom chain 
 
 ## Cleanup Docker
 Use the following commands with caution to cleanup your Docker environment.
