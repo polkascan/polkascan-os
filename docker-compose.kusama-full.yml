@@ -48,6 +48,7 @@ services:
       - SUBSTRATE_METADATA_VERSION=9
       - BALANCE_SYSTEM_ACCOUNT_MIN_BLOCK=1375086
       - NEW_SESSION_EVENT_HANDLER=True
+      - FINALIZATION_ONLY=1
     depends_on:
       - redis
       - mysql

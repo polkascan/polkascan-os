@@ -51,6 +51,7 @@ services:
       - NEW_SESSION_EVENT_HANDLER=True
       - SUBSTRATE_STORAGE_BALANCE=Account
       - SUBSTRATE_STORAGE_INDICES=Accounts
+      - FINALIZATION_ONLY=1
 
     depends_on:
       - redis
