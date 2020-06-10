@@ -18,7 +18,7 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
-      - SUBSTRATE_ADDRESS_TYPE=2
+      - SUBSTRATE_ADDRESS_TYPE=42
       - TYPE_REGISTRY_FILE=app/type_registry/custom_types.json
       - SUBSTRATE_METADATA_VERSION=9
     depends_on:
@@ -44,10 +44,11 @@ services:
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://substrate-node:9933/
       - TYPE_REGISTRY_FILE=app/type_registry/custom_types.json
-      - SUBSTRATE_ADDRESS_TYPE=2
+      - SUBSTRATE_ADDRESS_TYPE=42
       - SUBSTRATE_METADATA_VERSION=9
-      - BALANCE_SYSTEM_ACCOUNT_MIN_BLOCK=1375086
       - NEW_SESSION_EVENT_HANDLER=True
+      - SUBSTRATE_STORAGE_BALANCE=Account
+      - SUBSTRATE_STORAGE_INDICES=Accounts
     depends_on:
       - redis
       - mysql
@@ -108,20 +109,20 @@ services:
       - '30333:30333'
       - '9933:9933'
       - '9944:9944'
-    command: --chain=kusama --db-cache=2048 --wasm-execution=Compiled --rpc-external --rpc-cors=all --ws-external --rpc-methods=Unsafe --pruning=archive
+    command: --dev --db-cache=2048 --wasm-execution=Compiled --rpc-external --rpc-cors=all --ws-external --rpc-methods=Unsafe --pruning=archive
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
     build:
       context: explorer-gui/.
       args:
-        NETWORK_NAME: Kusama
-        NETWORK_ID: kusama
+        NETWORK_NAME: Kusama Dev
+        NETWORK_ID: custom
         NETWORK_TYPE: pre
         CHAIN_TYPE: relay
-        NETWORK_TOKEN_SYMBOL: KSM
+        NETWORK_TOKEN_SYMBOL: DEV
         NETWORK_TOKEN_DECIMALS: 12
-        NETWORK_COLOR_CODE: 000000
+        NETWORK_COLOR_CODE: 777777
         API_URL: http://127.0.0.1:8080/api/v1
     ports:
       - '8080:80'
