@@ -68,11 +68,15 @@ docker-compose -p kusama -f docker-compose.kusama-full.yml up --build
 ## Other networks
 
 * Polkadot CC1: Use `docker-compose.polkadot-cc1-quick.yml` and `docker-compose.polkadot-cc1-full.yml`
+* Substrate Node Template (https://github.com/substrate-developer-hub/substrate-node-template): Use `docker-compose.substrate-node-template.yml`
 
-## Custom network
+## Add custom types for Substrate Node Template
 
-* Modify `docker-compose.custom.yml` according to the specification of the custom chain
-* Modify `harvester/app/type_registry/custom_types.json` to match the introduced types of the custom chain 
+* Modify `harvester/app/type_registry/substrate-node-template.json` to match the introduced types of the custom chain
+* Truncate `runtime` and `runtime_*` tables on database
+* Start harvester
+* Check http://127.0.0.1:8080/node-template/runtime-type if all type are now correctly supported
+* Monitor http://127.0.0.1:8080/node-template/harvester/admin if blocks are being processed and try to restart by pressing "Process blocks in harvester queue" if process is interupted.
 
 ## Cleanup Docker
 Use the following commands with caution to cleanup your Docker environment.
