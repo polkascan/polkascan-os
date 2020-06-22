@@ -106,11 +106,11 @@ services:
       context: explorer-gui/.
       args:
         NETWORK_NAME: Substrate Node Template
-        NETWORK_ID: template
+        NETWORK_ID: node-template
         NETWORK_TYPE: pre
         CHAIN_TYPE: para
         NETWORK_TOKEN_SYMBOL: DEV
-        NETWORK_TOKEN_DECIMALS: 12
+        NETWORK_TOKEN_DECIMALS: 15
         NETWORK_COLOR_CODE: 777777
         API_URL: http://127.0.0.1:8080/api/v1
     ports:
