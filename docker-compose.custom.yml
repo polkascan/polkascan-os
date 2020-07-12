@@ -35,7 +35,7 @@ services:
     environment: &env
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
-      - PYTHONPATH=/usr/src/app
+      - PYTHONPATH=/usr/src/app:/usr/src/app/py-substrate-interface/:/usr/src/app/py-scale-codec/
       - ENVIRONMENT=prod
       - DB_HOST=mysql
       - DB_PORT=3306

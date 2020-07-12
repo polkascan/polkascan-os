@@ -17,7 +17,7 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
-      - SUBSTRATE_RPC_URL=http://substrate-node:9933/
+      - SUBSTRATE_RPC_URL=http://192.168.178.201:9936/
       - SUBSTRATE_ADDRESS_TYPE=0
       - TYPE_REGISTRY=polkadot
       - SUBSTRATE_METADATA_VERSION=9
@@ -25,7 +25,7 @@ services:
       - SUBSTRATE_STORAGE_INDICES=Accounts
     depends_on:
       - mysql
-      - substrate-node
+#      - substrate-node
 
   harvester-api:
     build: harvester/.
@@ -34,17 +34,19 @@ services:
     volumes:
       - './harvester:/usr/src/app'
     command: ./start.sh
+    ports:
+    - 8001:8000
     environment: &env
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
-      - PYTHONPATH=/usr/src/app
+      - PYTHONPATH=/usr/src/app:/usr/src/app/py-substrate-interface/:/usr/src/app/py-scale-codec/
       - ENVIRONMENT=prod
       - DB_HOST=mysql
       - DB_PORT=3306
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
-      - SUBSTRATE_RPC_URL=http://substrate-node:9933/
+      - SUBSTRATE_RPC_URL=http://192.168.178.201:9936/
       - TYPE_REGISTRY=polkadot
       - SUBSTRATE_ADDRESS_TYPE=0
       - SUBSTRATE_METADATA_VERSION=9
@@ -56,7 +58,7 @@ services:
     depends_on:
       - redis
       - mysql
-      - substrate-node
+#      - substrate-node
 
   harvester-worker:
     build: harvester/.
@@ -83,6 +85,7 @@ services:
   harvester-monitor:
     build: harvester/.
     image: polkascan/pre-harvester:latest
+    environment: *env
     ports:
       - '5555:5555'
     command:  flower -A app.tasks --port=5555 --broker=redis://redis:6379/0
@@ -104,16 +107,16 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=polkascan
 
-  substrate-node:
-    image: polkasource/substrate-client:polkadot-latest
-    hostname: substrate-node
-    volumes:
-      - 'substrate-data:/data'
-    ports:
-      - '30333:30333'
-      - '9933:9933'
-      - '9944:9944'
-    command: --chain=polkadot --db-cache=2048 --wasm-execution=Compiled --rpc-external --rpc-cors=all --ws-external --rpc-methods=Unsafe --pruning=archive
+#  substrate-node:
+#    image: polkasource/substrate-client:polkadot-latest
+#    hostname: substrate-node
+#    volumes:
+#      - 'substrate-data:/data'
+#    ports:
+#      - '30333:30333'
+#      - '9933:9933'
+#      - '9944:9944'
+#    command: --chain=polkadot --db-cache=2048 --wasm-execution=Compiled --rpc-external --rpc-cors=all --ws-external --rpc-methods=Unsafe --pruning=archive
 
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
