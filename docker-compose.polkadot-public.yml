@@ -17,7 +17,7 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
-      - SUBSTRATE_RPC_URL=http://192.168.178.201:9936/
+      - SUBSTRATE_RPC_URL=wss://rpc.polkadot.io/
       - SUBSTRATE_ADDRESS_TYPE=0
       - TYPE_REGISTRY=polkadot
       - SUBSTRATE_METADATA_VERSION=9
@@ -25,7 +25,6 @@ services:
       - SUBSTRATE_STORAGE_INDICES=Accounts
     depends_on:
       - mysql
-#      - substrate-node
 
   harvester-api:
     build: harvester/.
@@ -46,7 +45,7 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
-      - SUBSTRATE_RPC_URL=http://192.168.178.201:9936/
+      - SUBSTRATE_RPC_URL=wss://rpc.polkadot.io/
       - TYPE_REGISTRY=polkadot
       - SUBSTRATE_ADDRESS_TYPE=0
       - SUBSTRATE_METADATA_VERSION=9
@@ -58,7 +57,6 @@ services:
     depends_on:
       - redis
       - mysql
-#      - substrate-node
 
   harvester-worker:
     build: harvester/.
@@ -107,17 +105,6 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=polkascan
 
-#  substrate-node:
-#    image: polkasource/substrate-client:polkadot-latest
-#    hostname: substrate-node
-#    volumes:
-#      - 'substrate-data:/data'
-#    ports:
-#      - '30333:30333'
-#      - '9933:9933'
-#      - '9944:9944'
-#    command: --chain=polkadot --db-cache=2048 --wasm-execution=Compiled --rpc-external --rpc-cors=all --ws-external --rpc-methods=Unsafe --pruning=archive
-
   explorer-gui:
     image: polkascan/pre-explorer-gui:latest
     build:
@@ -144,4 +131,3 @@ services:
 
 volumes:
   db-data:
-  substrate-data:

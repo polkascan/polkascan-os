@@ -1,7 +1,7 @@
 # Polkascan Open-Source
 Polkascan Open-Source Application
 
-## Quick deployment
+## Quick deployment (Use hosted Polkascan API endpoints)
 ### Step 1: Clone repository: 
 ```bash
 git clone https://github.com/polkascan/polkascan-os.git
@@ -25,6 +25,33 @@ git submodule update --init --recursive
 ### Step 6: Then build the other docker containers
 ```bash
 docker-compose -p kusama -f docker-compose.kusama-quick.yml up --build
+```
+
+## Use public Substrate RPC endpoints
+
+### Step 1: Clone repository: 
+```bash
+git clone https://github.com/polkascan/polkascan-os.git
+```
+### Step 2: Change directory: 
+```bash
+cd polkascan-os
+```
+### Step 3: Check available releases: 
+```bash
+git tag
+```
+### Step 4: Checkout latest releases: 
+```bash
+git checkout v0.x.x
+```
+### Step 5: Make sure to also clone submodules within the cloned directory: 
+```bash
+git submodule update --init --recursive
+```
+### Step 6: Then build the other docker containers
+```bash
+docker-compose -p kusama -f docker-compose.kusama-public.yml up --build
 ```
 
 ## Full deployment
@@ -67,7 +94,7 @@ docker-compose -p kusama -f docker-compose.kusama-full.yml up --build
 
 ## Other networks
 
-* Polkadot CC1: Use `docker-compose.polkadot-cc1-quick.yml` and `docker-compose.polkadot-cc1-full.yml`
+* Polkadot: Use `docker-compose.polkadot-quick.yml`, `docker-compose.polkadot-public.yml` and `docker-compose.polkadot-full.yml`
 * Substrate Node Template (https://github.com/substrate-developer-hub/substrate-node-template): Use `docker-compose.substrate-node-template.yml`
 
 ## Add custom types for Substrate Node Template

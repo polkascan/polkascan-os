@@ -1,0 +1,121 @@
+version: '3.2'
+
+services:
+
+  explorer-api:
+    build: explorer-api/.
+    image: polkascan/pre-explorer-api:latest
+    hostname: explorer-api
+    volumes:
+      - './explorer-api:/usr/src/app'
+    command: ./start.sh
+    environment:
+      - PYTHONPATH=/usr/src/app
+      - ENVIRONMENT=prod
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_NAME=polkascan
+      - SUBSTRATE_RPC_URL=wss://kusama-rpc.polkadot.io/
+      - SUBSTRATE_ADDRESS_TYPE=2
+      - TYPE_REGISTRY=kusama
+      - SUBSTRATE_METADATA_VERSION=9
+    depends_on:
+      - mysql
+
+  harvester-api:
+    build: harvester/.
+    image: polkascan/pre-harvester:latest
+    hostname: harvester-api
+    volumes:
+      - './harvester:/usr/src/app'
+    command: ./start.sh
+    environment: &env
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+      - PYTHONPATH=/usr/src/app:/usr/src/app/py-substrate-interface/:/usr/src/app/py-scale-codec/
+      - ENVIRONMENT=prod
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_NAME=polkascan
+      - SUBSTRATE_RPC_URL=wss://kusama-rpc.polkadot.io/
+      - TYPE_REGISTRY=kusama
+      - SUBSTRATE_ADDRESS_TYPE=2
+      - SUBSTRATE_METADATA_VERSION=9
+      - BALANCE_SYSTEM_ACCOUNT_MIN_BLOCK=1375086
+      - NEW_SESSION_EVENT_HANDLER=True
+      - FINALIZATION_ONLY=1
+    depends_on:
+      - redis
+      - mysql
+
+  harvester-worker:
+    build: harvester/.
+    image: polkascan/pre-harvester:latest
+    volumes:
+      - './harvester:/usr/src/app'
+    command: celery -A app.tasks worker --loglevel=INFO
+    environment: *env
+    depends_on:
+      - redis
+      - mysql
+
+  harvester-beat:
+    build: harvester/.
+    image: polkascan/pre-harvester:latest
+    volumes:
+      - './harvester:/usr/src/app'
+      - '/usr/src/app/data'
+    command: celery -A app.tasks beat --loglevel=INFO  --schedule="data/celerybeat-schedule" --pidfile="data/celerybeat.pid"
+    environment: *env
+    depends_on:
+      - redis
+
+  harvester-monitor:
+    build: harvester/.
+    image: polkascan/pre-harvester:latest
+    ports:
+      - '5555:5555'
+    command:  flower -A app.tasks --port=5555 --broker=redis://redis:6379/0
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:3.2.11
+    hostname: redis
+
+  mysql:
+    image: mysql:latest
+    hostname: mysql
+    volumes:
+      - 'db-data:/var/lib/mysql'
+    ports:
+      - '33061:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=polkascan
+
+  explorer-gui:
+    image: polkascan/pre-explorer-gui:latest
+    build:
+      context: explorer-gui/.
+      args:
+        NETWORK_NAME: Kusama
+        NETWORK_ID: kusama
+        NETWORK_TYPE: pre
+        CHAIN_TYPE: relay
+        NETWORK_TOKEN_SYMBOL: KSM
+        NETWORK_TOKEN_DECIMALS: 12
+        NETWORK_COLOR_CODE: 000000
+        API_URL: http://127.0.0.1:8080/api/v1
+    ports:
+      - '8080:80'
+    depends_on:
+      - harvester-api
+      - explorer-api
+
+volumes:
+  db-data:
