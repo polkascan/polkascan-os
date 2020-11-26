@@ -49,7 +49,11 @@ git checkout v0.x.x
 ```bash
 git submodule update --init --recursive
 ```
-### Step 6: Then build the other docker containers
+### Step 6: During the first run let MySQL initialize (wait for about a minute)
+```bash
+docker-compose -p kusama -f docker-compose.kusama-public.yml up -d mysql
+```
+### Step 7: Then build the other docker containers
 ```bash
 docker-compose -p kusama -f docker-compose.kusama-public.yml up --build
 ```
