@@ -19,7 +19,8 @@ services:
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://host.docker.internal:9933/
       - SUBSTRATE_ADDRESS_TYPE=42
-      - TYPE_REGISTRY_FILE=app/type_registry/substrate-node-template.json
+      - TYPE_REGISTRY=substrate-node-template
+      - TYPE_REGISTRY_FILE=app/type_registry/custom_types.json
       - SUBSTRATE_METADATA_VERSION=9
     depends_on:
       - mysql
@@ -44,7 +45,8 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=http://host.docker.internal:9933/
-      - TYPE_REGISTRY_FILE=app/type_registry/substrate-node-template.json
+      - TYPE_REGISTRY=substrate-node-template
+      - TYPE_REGISTRY_FILE=app/type_registry/custom_types.json
       - SUBSTRATE_ADDRESS_TYPE=42
       - SUBSTRATE_METADATA_VERSION=9
       - NEW_SESSION_EVENT_HANDLER=True
