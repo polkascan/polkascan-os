@@ -97,7 +97,7 @@ services:
     hostname: redis
 
   mysql:
-    image: mysql:latest
+    image: mysql:8.0.23
     hostname: mysql
     volumes:
       - 'db-data:/var/lib/mysql'
