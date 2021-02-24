@@ -15,7 +15,7 @@ services:
         NETWORK_TOKEN_DECIMALS: 12
         NETWORK_COLOR_CODE: e6007a
         NGINX_CONF: nginx/polkascan-gui.conf
-        API_URL: https://explorer-31.polkascan.io/polkadot/api/v1
+        API_URL: https://explorer-31.polkascan.io/api/v1/polkadot
     ports:
       - '8080:80'
 
