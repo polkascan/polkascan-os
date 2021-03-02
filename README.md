@@ -126,3 +126,39 @@ docker system prune -a
 ```bash
 docker volume prune
 ```
+
+## Troubleshooting
+
+When certain block are not being processed or no blocks at all then most likely there is a missing or invalid type definition in the [type registry](https://github.com/polkascan/polkascan-pre-harvester/blob/c5f544ad631e3754ba1e818a26b7aac1ef11f287/app/type_registry/custom_types.json).
+
+Some steps to check:
+
+* The Substrate node should be started in archive mode (`--pruning archive`)
+* Be sure to regularly update, also the Git submodules: `git submodule update --init --recursive` for latest version of py-scale-codec
+* Check which blocks are not being processed and try to restart manually at: http://127.0.0.1:8080/<NETWORK_NAME>/harvester/admin
+* Check Celery queue for more details about failing blocks: http://127.0.0.1:5555/tasks?state=FAILURE
+* Check and match types in [./harvester/app/type_registry/custom_types.json](https://github.com/polkascan/polkascan-pre-harvester/blob/c5f544ad631e3754ba1e818a26b7aac1ef11f287/app/type_registry/custom_types.json) with added types in Substrate 
+
+You can also dive into Python to pinpoint which types are failing to decode:
+
+```python
+import json
+from scalecodec.type_registry import load_type_registry_file
+from substrateinterface import SubstrateInterface
+
+substrate = SubstrateInterface(
+    url='ws://127.0.0.1:9944',
+    type_registry_preset='substrate-node-template',
+    type_registry=load_type_registry_file('harvester/app/type_registry/custom_types.json'),
+)
+
+block_hash = substrate.get_block_hash(block_id=3899710)
+
+extrinsics = substrate.get_block_extrinsics(block_hash=block_hash)
+
+print('Extrinsincs:', json.dumps([e.value for e in extrinsics], indent=4))
+
+events = substrate.get_events(block_hash)
+
+print("Events:", json.dumps([e.value for e in events], indent=4))
+```
