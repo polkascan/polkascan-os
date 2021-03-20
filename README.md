@@ -1,10 +1,10 @@
 # Polkascan Open-Source
 Polkascan Open-Source Application
 
-## Quick deployment (Use hosted Polkascan API endpoints)
+## Quick deployment
 ### Step 1: Clone repository: 
 ```bash
-git clone https://github.com/polkascan/polkascan-os.git
+git clone https://github.com/sora-xor/polkascan-os.git
 ```
 ### Step 2: Change directory: 
 ```bash
