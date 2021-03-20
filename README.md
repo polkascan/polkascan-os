@@ -13,6 +13,10 @@ cd polkascan-os
 ### Step 3: Make sure to also clone submodules within the cloned directory: 
 ```bash
 git submodule update --init --recursive
+
+### Step 4: Change Substrate URL
+Change `SUBSTRATE_RPC_URL` in `docker-compose.substrate-node-template.yml` in order to change the SORA rpc url
+
 ```
 ### Step 6: Then build mysql
 ```bash
@@ -22,6 +26,9 @@ docker-compose -p node-template -f docker-compose.substrate-node-template.yml up
 ```bash
 docker-compose -p node-template -f docker-compose.substrate-node-template.yml up --build
 ```
+### Other parameters
+`NETWORK_NAME` in `docker-compose.substrate-node-template.yml` for changing network name in UI, i.e. 'SORA-dev`, `SORA-staging`.
+
 
 ## Links to applications
 * Polkascan Explorer GUI: http://127.0.0.1:8080
