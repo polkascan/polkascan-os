@@ -30,12 +30,12 @@ docker-compose -p node-template -f docker-compose.substrate-node-template.yml up
 * Polkadot JS Apps: http://127.0.0.1:8081
 
 
-## Add custom types for Substrate Node Template
-* Modify `harvester/app/type_registry/substrate-node-template.json` to match the introduced types of the custom chain
+## Add custom types for SORA
+* Modify `harvester/app/type_registry/default.json` to match the introduced types of the custom chain
 * Truncate `runtime` and `runtime_*` tables on database
 * Start harvester
-* Check http://127.0.0.1:8080/node-template/runtime-type if all type are now correctly supported
-* Monitor http://127.0.0.1:8080/node-template/harvester/admin if blocks are being processed and try to restart by pressing "Process blocks in harvester queue" if process is interupted.
+* Check http://127.0.0.1:8080/sora/runtime-type if all type are now correctly supported
+* Monitor http://127.0.0.1:8080/sora/harvester/admin if blocks are being processed and try to restart by pressing "Process blocks in harvester queue" if process is interupted.
 
 ## System requrements
 Memory: >2GB (more is better), 
