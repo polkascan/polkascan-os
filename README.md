@@ -30,7 +30,7 @@ docker-compose -p node-template -f docker-compose.substrate-node-template.yml up
 
 ## Links to applications
 * Polkascan Explorer GUI: http://127.0.0.1:8080
-* Monitor harvester progress: http://127.0.0.1:8080/kusama/harvester/admin
+* Monitor harvester progress: http://127.0.0.1:8080/sora/harvester/admin
 * Harvester Task Monitor: http://127.0.0.1:5555
 * Polkadot JS Apps: http://127.0.0.1:8081
 
