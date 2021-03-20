@@ -17,11 +17,11 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
-      - SUBSTRATE_RPC_URL=http://host.docker.internal:9933/
+      - SUBSTRATE_RPC_URL=https://rpc.framenode-1.s1.dev.sora2.soramitsu.co.jp/
       - SUBSTRATE_ADDRESS_TYPE=42
-      - TYPE_REGISTRY=substrate-node-template
+      - TYPE_REGISTRY=default
       - TYPE_REGISTRY_FILE=app/type_registry/custom_types.json
-      - SUBSTRATE_METADATA_VERSION=9
+      - SUBSTRATE_METADATA_VERSION=12
     depends_on:
       - mysql
 
@@ -44,11 +44,11 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - DB_NAME=polkascan
-      - SUBSTRATE_RPC_URL=http://host.docker.internal:9933/
-      - TYPE_REGISTRY=substrate-node-template
+      - SUBSTRATE_RPC_URL=https://rpc.framenode-1.s1.dev.sora2.soramitsu.co.jp/
+      - TYPE_REGISTRY=default
       - TYPE_REGISTRY_FILE=app/type_registry/custom_types.json
       - SUBSTRATE_ADDRESS_TYPE=42
-      - SUBSTRATE_METADATA_VERSION=9
+      - SUBSTRATE_METADATA_VERSION=12
       - NEW_SESSION_EVENT_HANDLER=True
       - SUBSTRATE_STORAGE_BALANCE=Account
       - SUBSTRATE_STORAGE_INDICES=Accounts
@@ -107,13 +107,13 @@ services:
     build:
       context: explorer-gui/.
       args:
-        NETWORK_NAME: Substrate Node Template
-        NETWORK_ID: node-template
+        NETWORK_NAME: SORA
+        NETWORK_ID: sora
         NETWORK_TYPE: pre
         CHAIN_TYPE: para
-        NETWORK_TOKEN_SYMBOL: DEV
-        NETWORK_TOKEN_DECIMALS: 15
-        NETWORK_COLOR_CODE: 777777
+        NETWORK_TOKEN_SYMBOL: XOR
+        NETWORK_TOKEN_DECIMALS: 18
+        NETWORK_COLOR_CODE: c6021a
         API_URL: http://127.0.0.1:8080/api/v1
     ports:
       - '8080:80'
