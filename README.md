@@ -25,7 +25,7 @@ docker-compose -p node-template -f docker-compose.substrate-node-template.yml up
 docker-compose -p node-template -f docker-compose.substrate-node-template.yml up --build
 ```
 ### Other parameters
-`NETWORK_NAME` in `docker-compose.substrate-node-template.yml` for changing network name in UI, i.e. 'SORA-dev`, `SORA-staging`.
+`NETWORK_NAME` in `docker-compose.substrate-node-template.yml` for changing network name in UI, i.e. `SORA-dev`, `SORA-staging`.
 
 
 ## Links to applications
