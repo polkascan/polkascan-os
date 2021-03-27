@@ -6,4 +6,4 @@
 	url = https://github.com/sora-xor/polkascan-pre-explorer-api.git
 [submodule "explorer-gui"]
 	path = explorer-gui
-	url = https://github.com/polkascan/polkascan-pre-explorer-gui.git
+	url = https://github.com/sora-xor/polkascan-pre-explorer-gui.git
