@@ -18,7 +18,7 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=https://rpc.framenode-1.s1.dev.sora2.soramitsu.co.jp/
-      - SUBSTRATE_ADDRESS_TYPE=42
+      - SUBSTRATE_ADDRESS_TYPE=69
       - TYPE_REGISTRY=default
       - TYPE_REGISTRY_FILE=app/type_registry/custom_types.json
       - SUBSTRATE_METADATA_VERSION=12
@@ -47,7 +47,7 @@ services:
       - SUBSTRATE_RPC_URL=https://rpc.framenode-1.s1.dev.sora2.soramitsu.co.jp/
       - TYPE_REGISTRY=default
       - TYPE_REGISTRY_FILE=app/type_registry/custom_types.json
-      - SUBSTRATE_ADDRESS_TYPE=42
+      - SUBSTRATE_ADDRESS_TYPE=69
       - SUBSTRATE_METADATA_VERSION=12
       - NEW_SESSION_EVENT_HANDLER=True
       - SUBSTRATE_STORAGE_BALANCE=Account
