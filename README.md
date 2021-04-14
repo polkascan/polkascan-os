@@ -93,7 +93,7 @@ from substrateinterface import SubstrateInterface
 
 substrate = SubstrateInterface(
     url='ws://127.0.0.1:9944',
-    type_registry_preset='substrate-node-template',
+    type_registry_preset='default',
     type_registry=load_type_registry_file('harvester/app/type_registry/custom_types.json'),
 )
 
