@@ -107,3 +107,10 @@ events = substrate.get_events(block_hash)
 
 print("Events:", json.dumps([e.value for e in events], indent=4))
 ```
+
+One can use the `harvester/query.py` file. It can be run with:
+```bash
+cd harvester
+python -m pip install -r requirements.txt
+python query.py
+```
