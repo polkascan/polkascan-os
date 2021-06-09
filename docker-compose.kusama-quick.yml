@@ -15,7 +15,7 @@ services:
         NETWORK_TOKEN_DECIMALS: 12
         NETWORK_COLOR_CODE: 000000
         NGINX_CONF: nginx/polkascan-gui.conf
-        API_URL: https://explorer-31.polkascan.io/api/v1/kusama
+        API_URL: https://explorer-32.polkascan.io/api/v1/kusama
     ports:
       - '8080:80'
 
