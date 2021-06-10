@@ -127,6 +127,10 @@ docker system prune -a
 docker volume prune
 ```
 
+### API specification
+
+The Polkascan API implements the https://jsonapi.org/ specification. An overview of available endpoints can be found here: https://github.com/polkascan/polkascan-pre-explorer-api/blob/master/app/main.py#L60
+
 ## Troubleshooting
 
 When certain block are not being processed or no blocks at all then most likely there is a missing or invalid type definition in the [type registry](https://github.com/polkascan/polkascan-pre-harvester/blob/c5f544ad631e3754ba1e818a26b7aac1ef11f287/app/type_registry/custom_types.json).
