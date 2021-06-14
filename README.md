@@ -57,9 +57,7 @@ docker-compose -p kusama -f docker-compose.kusama-public.yml up -d mysql
 ```bash
 docker-compose -p kusama -f docker-compose.kusama-public.yml up --build
 ```
-
-## Full deployment
-The following steps will run a full Polkascan-stack that harvests blocks from a new local network.
+## Use custom Substrate template
 
 ### Step 1: Clone repository: 
 ```bash
@@ -83,11 +81,11 @@ git submodule update --init --recursive
 ```
 ### Step 6: During the first run let MySQL initialize (wait for about a minute)
 ```bash
-docker-compose -p kusama -f docker-compose.kusama-full.yml up -d mysql
+docker-compose -p gesell -f docker-compose.substrate-node-template.yml up -d mysql
 ```
 ### Step 7: Then build the other docker containers
 ```bash
-docker-compose -p kusama -f docker-compose.kusama-full.yml up --build
+docker-compose -p gesell -f docker-compose.substrate-node-template.yml up --build
 ```
 
 ## Links to applications
