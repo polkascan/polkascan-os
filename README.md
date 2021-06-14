@@ -1,62 +1,6 @@
 # Polkascan Open-Source
 Polkascan Open-Source Application
 
-## Quick deployment (Use hosted Polkascan API endpoints)
-### Step 1: Clone repository: 
-```bash
-git clone https://github.com/polkascan/polkascan-os.git
-```
-### Step 2: Change directory: 
-```bash
-cd polkascan-os
-```
-### Step 3: Check available releases: 
-```bash
-git tag
-```
-### Step 4: Checkout latest releases: 
-```bash
-git checkout v0.x.x
-```
-### Step 5: Make sure to also clone submodules within the cloned directory: 
-```bash
-git submodule update --init --recursive
-```
-### Step 6: Then build the other docker containers
-```bash
-docker-compose -p kusama -f docker-compose.kusama-quick.yml up --build
-```
-
-## Use public Substrate RPC endpoints
-
-### Step 1: Clone repository: 
-```bash
-git clone https://github.com/polkascan/polkascan-os.git
-```
-### Step 2: Change directory: 
-```bash
-cd polkascan-os
-```
-### Step 3: Check available releases: 
-```bash
-git tag
-```
-### Step 4: Checkout latest releases: 
-```bash
-git checkout v0.x.x
-```
-### Step 5: Make sure to also clone submodules within the cloned directory: 
-```bash
-git submodule update --init --recursive
-```
-### Step 6: During the first run let MySQL initialize (wait for about a minute)
-```bash
-docker-compose -p kusama -f docker-compose.kusama-public.yml up -d mysql
-```
-### Step 7: Then build the other docker containers
-```bash
-docker-compose -p kusama -f docker-compose.kusama-public.yml up --build
-```
 ## Use custom Substrate template
 
 ### Step 1: Clone repository: 
