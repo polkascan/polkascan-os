@@ -1,0 +1,198 @@
+{
+  "runtime_id": 100,
+  "types": {
+    "CeremonyPhaseType": {
+      "type": "enum",
+      "value_list": [
+        "Registering",
+        "Assigning",
+        "Attesting"
+      ]
+    },
+    "ShopIdentifier": "Vec<u8>",
+    "ArticleIdentifier": "Vec<u8>",
+    "CeremonyIndexType": "u32",
+    "ParticipantIndexType": "u64",
+    "MeetupIndexType": "u64",
+    "AttestationIndexType": "u64",
+    "CommunityIdentifier": "Hash",
+    "CurrencyIdentifier": "CommunityIdentifier",
+    "BalanceType": "i128",
+    "BalanceEntry": {
+      "type": "struct",
+      "type_mapping": [
+        [
+          "principal",
+          "i128"
+        ],
+        [
+          "last_update",
+          "BlockNumber"
+        ]
+      ]
+    },
+    "CommunityCeremony": "(CommunityIdentifier,CeremonyIndexType)",
+    "CurrencyCeremony": "CommunityCeremony",
+    "CommunityPropertiesType": {
+      "type": "struct",
+      "type_mapping": [
+        [
+          "name_utf8",
+          "Vec<u8>"
+        ],
+        [
+          "demurrage_per_block",
+          "Demurrage"
+        ]
+      ]
+    },
+    "CurrencyPropertiesType": "CommunityPropertiesType",
+    "Demurrage": "i128",
+    "Location": {
+      "type": "struct",
+      "type_mapping": [
+        [
+          "lat",
+          "i64"
+        ],
+        [
+          "lon",
+          "i64"
+        ]
+      ]
+    },
+    "Reputation": {
+      "type": "enum",
+      "value_list": [
+        "Unverified",
+        "UnverifiedReputable",
+        "VerifiedUnlinked",
+        "VerifiedLinked"
+      ]
+    },
+    "ClaimOfAttendance": {
+      "type": "struct",
+      "type_mapping": [
+        [
+          "claimant_public",
+          "AccountId"
+        ],
+        [
+          "ceremony_index",
+          "CeremonyIndexType"
+        ],
+        [
+          "community_identifier",
+          "CommunityIdentifier"
+        ],
+        [
+          "meetup_index",
+          "MeetupIndexType"
+        ],
+        [
+          "location",
+          "Location"
+        ],
+        [
+          "timestamp",
+          "Moment"
+        ],
+        [
+          "number_of_participants_confirmed",
+          "u32"
+        ]
+      ]
+    },
+    "Attestation": {
+      "type": "struct",
+      "type_mapping": [
+        [
+          "claim",
+          "ClaimOfAttendance"
+        ],
+        [
+          "signature",
+          "MultiSignature"
+        ],
+        [
+          "public",
+          "AccountId"
+        ]
+      ]
+    },
+    "ProofOfAttendance": {
+      "type": "struct",
+      "type_mapping": [
+        [
+          "prover_public",
+          "AccountId"
+        ],
+        [
+          "ceremony_index",
+          "CeremonyIndexType"
+        ],
+        [
+          "community_identifier",
+          "CommunityIdentifier"
+        ],
+        [
+          "attendee_public",
+          "AccountId"
+        ],
+        [
+          "attendee_signature",
+          "MultiSignature"
+        ]
+      ],
+      "ShardIdentifier": "Hash",
+      "Request": {
+        "type": "struct",
+        "type_mapping": [
+          [
+            "shard",
+            "ShardIdentifier"
+          ],
+          [
+            "cyphertext",
+            "Vec<u8>"
+          ]
+        ]
+      },
+      "Enclave": {
+        "type": "struct",
+        "type_mapping": [
+          [
+            "pubkey",
+            "AccountId"
+          ],
+          [
+            "mrenclave",
+            "Hash"
+          ],
+          [
+            "timestamp",
+            "u64"
+          ],
+          [
+            "url",
+            "Text"
+          ]
+        ]
+      },
+      "ProofOfPersonHoodRequest": "Vec<(CommunityIdentifier, ProofOfAttendance<Signature, AccountId>)>",
+      "ProofOfPersonhoodConfidence": {
+        "type": "struct",
+        "type_mapping": [
+          [
+            "attested",
+            "u8"
+          ],
+          [
+            "last_n_ceremonies",
+            "u8"
+          ]
+        ]
+      }
+    }
+  }
+}
