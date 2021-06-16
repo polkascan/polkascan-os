@@ -46,7 +46,11 @@ docker-compose -p gesell -f docker-compose.substrate-node-template.yml up --buil
 ## Add custom types for Substrate Node Template
 
 * Modify `harvester/app/type_registry/substrate-node-template.json` to match the introduced types of the custom chain
-* Truncate `runtime` and `runtime_*` tables on database
+* Truncate `runtime` and `runtime_*` tables on database:
+To truncate, first enter the running mysql container: docker exec -it mysql_container_name mysql -uroot -p
+Change to the database defined in the docker-compose (by default polkascan): USE polkascan
+See all tables: SHOW tables;
+Truncate each table with runtime, example: truncate runtime; 
 * Start harvester
 * Check http://127.0.0.1:8080/node-template/runtime-type if all type are now correctly supported
 * Monitor http://127.0.0.1:8080/node-template/harvester/admin if blocks are being processed and try to restart by pressing "Process blocks in harvester queue" if process is interupted.
