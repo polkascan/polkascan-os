@@ -20,7 +20,7 @@ services:
       - SUBSTRATE_RPC_URL=wss://gesell.encointer.org/
       - SUBSTRATE_ADDRESS_TYPE=42
       - TYPE_REGISTRY=substrate-node-template
-      - TYPE_REGISTRY_FILE=./../custom_types.json
+      - TYPE_REGISTRY_FILE=app/type_registry/custom_types.json
       - SUBSTRATE_METADATA_VERSION=9
     depends_on:
       - mysql
@@ -46,7 +46,7 @@ services:
       - DB_NAME=polkascan
       - SUBSTRATE_RPC_URL=wss://gesell.encointer.org/
       - TYPE_REGISTRY=substrate-node-template
-      - TYPE_REGISTRY_FILE=./../custom_types.json
+      - TYPE_REGISTRY_FILE=app/type_registry/custom_types.json
       - SUBSTRATE_ADDRESS_TYPE=42
       - SUBSTRATE_METADATA_VERSION=9
       - NEW_SESSION_EVENT_HANDLER=True
